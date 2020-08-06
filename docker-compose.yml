@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/var/www/app
+      - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./apache/htaccess-laravel:/var/www/app/public/.htaccess
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./php:/data
+      - ./:/docker
+    working_dir: /var/www/app
+    ports:
+      - "8000:443"
+    command: bash -c "sh /data/php-apache.sh"
